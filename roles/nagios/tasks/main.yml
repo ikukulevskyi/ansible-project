@@ -1,6 +1,10 @@
 ---
 # This will install nagios
-- name: Install MySQL repository
+- name: Install Nagios repository
+  apt:
+    deb: http://ftp.ru.debian.org/debian/pool/main/n/nagios4/nagios4-cgi_4.3.4-3_amd64.deb
+    dpkg_options: 'force-confold,force-confdef'
+- name: Install Nagios repository
   apt:
     deb: http://ftp.ru.debian.org/debian/pool/main/n/nagios4/nagios4_4.3.4-3_amd64.deb
     dpkg_options: 'force-confold,force-confdef'

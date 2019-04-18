@@ -12,3 +12,6 @@
     name: apache2
     state: started
     enabled: yes
+
+- name: Autostart apache2
+  shell: update-rc.d apache2 defaults

@@ -46,3 +46,6 @@
     priv: "*.*:ALL"
     host: '%'
     state: present
+
+- name: Autostart Mysql
+  shell: update-rc.d mysql defaults
