@@ -21,5 +21,10 @@
     insertafter: EOF
     line: 'echo never > /sys/kernel/mm/transparent_hugepage/enabled'
     create: yes
+- name: Configure the redis cnf file with hosts
+  template: 
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf
+  notify: restart haproxy
 - name: Autostart Redis
   shell: update-rc.d redis-server defaults
