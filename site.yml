@@ -37,7 +37,7 @@
   tags:
   - lb
 
-# Configure and deploy the load balancer(s).
+# Configure and deploy the redis server.
 - hosts: redis
 
   roles:

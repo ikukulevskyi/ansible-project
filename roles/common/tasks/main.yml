@@ -3,7 +3,7 @@
 
 - name: Install new packages
   apt: 
-    name: ['ntp', 'mc', 'htop', 'nagios-nrpe-server', 'nagios-plugins']
+    name: ['ntp', 'mc', 'htop', 'nagios-nrpe-plugin', 'nagios-plugins-standard']
     update_cache: true
     state: present
 
