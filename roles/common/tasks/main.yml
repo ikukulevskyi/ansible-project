@@ -1,5 +1,11 @@
 ---
 # This role contains common plays that will run on all nodes.
+- name: Update packages
+  apt:
+    update_cache: yes
+    upgrade: "yes"
+    cache_valid_time: 86400
+  tags: upgrade
 
 - name: Install new packages
   apt: 
@@ -16,7 +22,7 @@
 
 - name: Start the ntp service
   service: 
-    name: ntpd
+    name: ntp
     state: started 
     enabled: yes
   tags: ntp
