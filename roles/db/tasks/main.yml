@@ -4,10 +4,12 @@
   apt:
     deb: https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
     dpkg_options: 'force-confold,force-confdef'
+
 - name: Update packages
   apt:
     update_cache: yes
     cache_valid_time: 86400
+
 - name: Install Mysql package
   apt: 
     name: ['mysql-server', 'python-mysqldb']
@@ -23,7 +25,7 @@
 
 - name: Start Mysql Service
   service: 
-    name: mysqld 
+    name: mysql
     state: started 
     enabled: yes
 
