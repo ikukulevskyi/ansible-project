@@ -1,11 +1,19 @@
 ---
+- name: Copy deb packages redis-tools
+  copy: 
+    src: "{{ deb_name_redis_tools }}"
+    dest: /tmp/"{{ deb_name_redis_tools }}"
+- name: Copy deb packages redis-server
+  copy: 
+    src: "{{ deb_name_redis_server }}"
+    dest: /tmp/"{{ deb_name_redis_server }}"
 - name: Install deb packages redis-tools
   apt:  
-    deb: "{{ deb_name_redis_tools }}"
+    deb: /tmp/"{{ deb_name_redis_tools }}"
     dpkg_options: 'force-confold,force-confdef'
 - name: Install deb packages redis-server
   apt:  
-    deb: "{{ deb_name_redis_server }}"
+    deb: /tmp/"{{ deb_name_redis_server }}"
     dpkg_options: 'force-confold'
 - name: For Redis change file /etc/sysctl.conf
   lineinfile:

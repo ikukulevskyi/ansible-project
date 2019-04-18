@@ -4,6 +4,7 @@
     repo: "{{ repository }}" 
     version: "{{ webapp_version }}" 
     dest: "/var/www/html/app"
+    force: yes
 
 - name: Install packages 
   apt:
