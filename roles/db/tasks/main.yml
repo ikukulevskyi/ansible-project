@@ -1,5 +1,18 @@
 ---
 # This role will install MySQL and create db user and give permissions.
+- name: Set MySQL root password before installing
+  debconf:
+    name: 'mysql-server'
+    question: 'mysql-server/root_password'
+    value: '{{upassword | quote}}'
+    vtype: 'password'
+- name: Confirm MySQL root password before installing
+  debconf:
+    name: 'mysql-server'
+    question: 'mysql-server/root_password_again'
+    value: '{{upassword | quote}}'
+    vtype: 'password'
+
 - name: Install MySQL repository
   apt:
     deb: https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
@@ -33,6 +46,8 @@
   mysql_db: 
     name: "{{ dbname }}"
     state: present
+    login_password: '{{ upassword }}'
+    login_user: 'root'
 
 - name: Create Application DB User
   mysql_user: 
@@ -41,3 +56,5 @@
     priv: "*.*:ALL"
     host: '%'
     state: present
+    login_password: '{{ upassword }}'
+    login_user: 'root'
