@@ -1,0 +1,28 @@
+---
+# This role contains common plays that will run on all nodes.
+
+- name: Install new packages
+  apt: 
+    name: "{{ item }}"
+    update_cache: true
+    state: present
+  with_items:
+    - ntp
+    - mc
+    - htop
+    - nagios-nrpe-server
+    - nagios-plugins
+
+- name: Configure ntp file
+  template: 
+    src: ntp.conf.j2 
+    dest: /etc/ntp.conf
+  tags: ntp
+  notify: restart ntp
+
+- name: Start the ntp service
+  service: 
+    name: ntpd
+    state: started 
+    enabled: yes
+  tags: ntp

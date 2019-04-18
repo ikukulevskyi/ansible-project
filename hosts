@@ -1,0 +1,15 @@
+[webservers]
+ansible-web
+ansible-web2
+
+[dbservers]
+ansible-mysql
+
+[lbservers]
+ansible-haproxy
+
+[monitoring]
+ansible-nagios
+
+[redis]
+ansible-redis

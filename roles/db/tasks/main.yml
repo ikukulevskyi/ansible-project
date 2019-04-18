@@ -1,0 +1,44 @@
+---
+# This role will install MySQL and create db user and give permissions.
+- name: Install MySQL repository
+  apt:
+    deb: https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
+    dpkg_options: 'force-confold,force-confdef'
+- name: Update packages
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+- name: Install Mysql package
+  yum: 
+    name: {{ item }} 
+    state: latest
+    dpkg_options: 'force-confold,force-confdef'
+  with_items:
+   - mysql-server
+   - python-mysqldb
+
+- name: Create Mysql configuration file
+  template: 
+    src: my.cnf.j2 
+    dest: /etc/my.cnf
+  notify:
+  - restart mysql
+
+- name: Start Mysql Service
+  service: 
+    name: mysqld 
+    state: started 
+    enabled: yes
+
+- name: Create Application Database
+  mysql_db: 
+    name: "{{ dbname }}"
+    state: present
+
+- name: Create Application DB User
+  mysql_user: 
+    name: "{{ dbuser }}"
+    password: "{{ upassword }}"
+    priv: "*.*:ALL"
+    host: '%'
+    state: present

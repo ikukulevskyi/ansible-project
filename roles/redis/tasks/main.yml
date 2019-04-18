@@ -1,0 +1,25 @@
+---
+- name: Install deb packages redis-tools
+  apt:  
+    deb: redis-tools_5.0.4-1_amd64.deb
+    dpkg_options: 'force-confold,force-confdef'
+- name: Install deb packages redis-server
+  apt:  
+    deb: redis-server_5.0.4-1_amd64.deb
+    dpkg_options: 'force-confold'
+- name: For Redis change file /etc/sysctl.conf
+  lineinfile:
+    path: /etc/sysctl.conf
+    regexp: ''
+    insertafter: EOF
+    line: 'vm.overcommit_memory = 1'
+    create: yes
+- name: For Redis change file /etc/rc.local
+  lineinfile:
+    path: /etc/rc.local
+    regexp: ''
+    insertafter: EOF
+    line: 'echo never > /sys/kernel/mm/transparent_hugepage/enabled'
+    create: yes
+- name: Autostart Redis
+  shell: update-rc.d redis-server defaults
