@@ -3,23 +3,20 @@
   git: 
     repo: "{{ repository }}" 
     version: "{{ webapp_version }}" 
-    dest: "/var/www/html/"
+    dest: "/var/www/html/app"
 
-- name: Install apache2
+- name: Install packages 
   apt:
     name: ['python-pip', 'libapache2-mod-python', 'python-mysqldb']
     update_cache: true
     state: present
 
-- name: Install Flask
+- name: Install rpython requirements
   pip:
-    name: flask
-- name: Install Redis
-  pip:
-    name: redis
+    requirements: "/var/www/html/app/requirements.txt"
 
 - name: Replace python file
   replace:
-    dest: /var/www/html/app.py
+    dest: /var/www/html/app/app.py
     regexp: 'host="redis"'
-    replace: "{{ redis_host }}"
+    replace: host="{{ hostvars['ansible-redis']['ansible_default_ipv4']['address'] }}"

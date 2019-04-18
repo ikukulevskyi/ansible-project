@@ -1,16 +1,6 @@
 ---
 # This role will install MySQL and create db user and give permissions
 
-- name: Install MySQL repository
-  apt:
-    deb: https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb
-    dpkg_options: 'force-confold,force-confdef'
-
-- name: Update packages
-  apt:
-    update_cache: yes
-    cache_valid_time: 86400
-
 - name: Set MySQL root password before installing
   debconf:
     name: 'mysql-server'
@@ -29,12 +19,12 @@
     update_cache: true
     state: present
 
-#- name: Create Mysql configuration file
-#  template: 
-#    src: my.cnf.j2 
-#    dest: /etc/my.cnf
-#  notify:
-#  - restart mysql
+- name: Create Mysql configuration file
+  template: 
+    src: my.cnf.j2 
+    dest: /etc/mysql/my.cnf
+  notify:
+  - restart mysql
 
 - name: Start Mysql Service
   service: 
@@ -44,17 +34,15 @@
 
 - name: Create Application Database
   mysql_db: 
+    login_unix_socket: /var/run/mysqld/mysqld.sock
     name: "{{ dbname }}"
     state: present
-    login_password: '{{ upassword }}'
-    login_user: 'root'
 
 - name: Create Application DB User
   mysql_user: 
+    login_unix_socket: /var/run/mysqld/mysqld.sock
     name: "{{ dbuser }}"
     password: "{{ upassword }}"
     priv: "*.*:ALL"
     host: '%'
     state: present
-    login_password: '{{ upassword }}'
-    login_user: 'root'
