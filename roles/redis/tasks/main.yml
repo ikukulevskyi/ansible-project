@@ -1,11 +1,11 @@
 ---
 - name: Install deb packages redis-tools
   apt:  
-    deb: redis-tools_5.0.4-1_amd64.deb
+    deb: "{{ deb_name_redis_tools }}"
     dpkg_options: 'force-confold,force-confdef'
 - name: Install deb packages redis-server
   apt:  
-    deb: redis-server_5.0.4-1_amd64.deb
+    deb: "{{ deb_name_redis_server }}"
     dpkg_options: 'force-confold'
 - name: For Redis change file /etc/sysctl.conf
   lineinfile:

@@ -9,13 +9,10 @@
     update_cache: yes
     cache_valid_time: 86400
 - name: Install Mysql package
-  yum: 
-    name: {{ item }} 
-    state: latest
-    dpkg_options: 'force-confold,force-confdef'
-  with_items:
-   - mysql-server
-   - python-mysqldb
+  apt: 
+    name: ['mysql-server', 'python-mysqldb']
+    update_cache: true
+    state: present
 
 - name: Create Mysql configuration file
   template: 

@@ -3,14 +3,9 @@
 
 - name: Install apache2
   apt:
-    name: "{{ item }}"
+    name: ['apache2', 'libapache2-mod-python', 'python-mysqldb', 'php', 'php-mysqls', 'git']
     update_cache: true
     state: present
-  with_items:
-   - apache2
-   - php
-   - php-mysql
-   - git
 
 - name: apache2 service state
   service:
