@@ -30,6 +30,9 @@ inventory file, grouped by their purpose:
 		[lbservers]
 		lbserver
 		
+		[redis]
+		redis
+		
 		[monitoring]
 		nagios
 
